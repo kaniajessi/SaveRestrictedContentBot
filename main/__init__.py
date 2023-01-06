@@ -46,19 +46,21 @@ userbot = Client(
 
 try:
     userbot.start()
+    ubot_me = userbot.get_me()
+    LOGS.info(f"UserBot Started as @{ubot_me.username} [ {ubot_me.id} ]")
 except BaseException:
-    print("Userbot Error ! Have you added SESSION while deploying??")
+    LOGGER(__name__).info("Userbot Error ! Have you added SESSION while deploying??")
     sys.exit(1)
 
+
 Bot = Client(
-    "SaveRestricted",
-    bot_token=BOT_TOKEN,
-    api_id=int(API_ID),
-    api_hash=API_HASH
-)    
+    "SaveRestricted", bot_token=BOT_TOKEN, api_id=int(API_ID), api_hash=API_HASH
+)
 
 try:
     Bot.start()
+    bot_me = Bot.get_me()
+    LOGS.info(f"Bot Started as @{bot_me.username}")
 except Exception as e:
-    print(e)
+    LOGGER(__name__).error(e)
     sys.exit(1)
