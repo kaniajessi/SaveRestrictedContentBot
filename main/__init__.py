@@ -6,10 +6,28 @@ from telethon.sessions import StringSession
 from telethon.sync import TelegramClient
 
 from decouple import config
+from dotenv import load_dotenv
 import logging, time, sys
 
-logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
-                    level=logging.WARNING)
+load_dotenv("config.env")
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(levelname)s - %(asctime)s] - %(name)s - %(message)s",
+    datefmt="%d-%b-%y %H:%M:%S",
+)
+logging.getLogger("asyncio").setLevel(logging.CRITICAL)
+logging.getLogger("pyrogram").setLevel(logging.WARNING)
+logging.getLogger("pyrogram.client").setLevel(logging.WARNING)
+logging.getLogger("pyrogram.session.auth").setLevel(logging.CRITICAL)
+logging.getLogger("pyrogram.session.session").setLevel(logging.WARNING)
+logging.getLogger("telethon.network.mtprotosender").setLevel(logging.WARNING)
+logging.getLogger("telethon.network.connection.connection").setLevel(logging.WARNING)
+LOGS = logging.getLogger(__name__)
+
+
+def LOGGER(name: str) -> logging.Logger:
+    return logging.getLogger(name)
 
 # variables
 API_ID = config("API_ID", default=None, cast=int)
