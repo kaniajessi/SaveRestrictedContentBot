@@ -1,7 +1,10 @@
-import sys
-import logging
 import importlib
+import logging
+import sys
 from pathlib import Path
+
+from . import LOGGER
+
 
 def load_plugins(plugin_name):
     path = Path(f"main/plugins/{plugin_name}.py")
@@ -11,4 +14,4 @@ def load_plugins(plugin_name):
     load.logger = logging.getLogger(plugin_name)
     spec.loader.exec_module(load)
     sys.modules["main.plugins." + plugin_name] = load
-    print("main has Imported " + plugin_name)
+    LOGGER("BOT").info(f"Succesfully Load {plugin_name}")
